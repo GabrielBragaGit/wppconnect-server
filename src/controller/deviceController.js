@@ -656,6 +656,11 @@ export async function starMessage(req, res) {
 }
 
 export async function chatWoot(req, res) {
+  console.log('-----------------------------------------------------------');
+  console.log(req);
+  console.log('-----------------------------------------------------------');
+  console.log(req.params);
+  console.log('-----------------------------------------------------------');
   const { session } = req.params;
   const client = clientsArray[session];
   if (client == null || client.status !== 'CONNECTED') return;
