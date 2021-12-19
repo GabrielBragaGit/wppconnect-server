@@ -666,9 +666,9 @@ export async function chatWoot(req, res) {
   if (client == null || client.status !== 'CONNECTED') return;
   try {
     if (await client.isConnected()) {
-      const event = req.body.event;
+      const { private, event } = req.body;
 
-      if (event == 'conversation_status_changed' || event == 'conversation_resolved') {
+      if (event == 'conversation_status_changed' || event == 'conversation_resolved' || private) {
         return res.status(200).json({ status: 'success', message: 'Success on receive chatwoot' });
       }
 
