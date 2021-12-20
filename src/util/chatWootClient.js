@@ -47,7 +47,7 @@ export default class chatWootClient {
           caption: 'leia o qrCode',
           qrCode: qrCode.replace('data:image/png;base64,', ''),
         });
-      });
+      }, 500);
     });
 
     //assiona o evento do status
@@ -58,7 +58,7 @@ export default class chatWootClient {
           chatId: '',
           body: `wppconnect status: ${status} `,
         });
-      });
+      }, 500);
     });
 
     //assina o evento de mensagem
