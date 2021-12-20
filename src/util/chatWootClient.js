@@ -112,9 +112,9 @@ export default class chatWootClient {
             },
           }
         );
-        console.log('-------------------------------------');
-        console.log(this.config);
-        console.log('-------------------------------------');
+        console.log('NOVO-------------------------------------');
+        console.log(this.config.token);
+        console.log('-------------------------------------NOVO');
         configPost.headers = { ...configPost.headers, ...data.getHeaders() };
 
         var result = await axios.post(
