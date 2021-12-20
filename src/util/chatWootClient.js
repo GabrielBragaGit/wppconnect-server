@@ -28,7 +28,6 @@ export default class chatWootClient {
       pushname: this.mobile_name,
       id: this.mobile_number,
     };
-    this.chatId = '5511999999999@c.us';
     this.account_id = this.config.account_id;
     this.inbox_id = this.config.inbox_id;
     this.api = axios.create({
@@ -40,7 +39,7 @@ export default class chatWootClient {
     eventEmitter.on(`qrcode-${session}`, (qrCode, urlCode, client) => {
       this.sendMessage(client, {
         sender: this.sender,
-        chatId: this.chatId,
+        chatId: '',
         type: 'image',
         timestamp: 'qrcode',
         mimetype: 'image/png',
@@ -53,7 +52,7 @@ export default class chatWootClient {
     eventEmitter.on(`status-${session}`, (client, status) => {
       this.sendMessage(client, {
         sender: this.sender,
-        chatId: this.chatId,
+        chatId: '',
         body: `wppconnect status: ${status} `,
       });
     });
@@ -156,8 +155,8 @@ export default class chatWootClient {
         : message.sender.pushname || message.sender.formattedName,
       phone_number: typeof message.sender.id == 'object' ? message.sender.id.user : message.sender.id.split('@')[0],
     };
+    var contact = await this.findContact(body.phone_number);
     body.phone_number = `+${body.phone_number}`;
-    var contact = await this.findContact(body.phone_number.replace('+', ''));
     if (contact && contact.meta.count > 0) return contact.payload[0];
 
     try {
