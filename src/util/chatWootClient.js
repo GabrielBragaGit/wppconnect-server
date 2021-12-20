@@ -112,9 +112,6 @@ export default class chatWootClient {
             },
           }
         );
-        console.log('NOVO-------------------------------------');
-        console.log(this.config.token);
-        console.log('-------------------------------------NOVO');
         configPost.headers = { ...configPost.headers, ...data.getHeaders() };
 
         var result = await axios.post(
@@ -174,9 +171,9 @@ export default class chatWootClient {
   async findConversation(contact) {
     try {
       const { data } = await this.api.get(
-        `api/v1/accounts/${this.account_id}/conversations?inbox_id=${this.inbox_id}&status=open`
+        `api/v1/accounts/${this.account_id}/conversations?inbox_id=${this.inbox_id}&status=all`
       );
-      return data.data.payload.find((e) => e.meta.sender.id == contact.id);
+      return data.data.payload.find((e) => e.meta.sender.id == contact.id && e.status != "resolved");
     } catch (e) {
       console.log(e);
       return null;
