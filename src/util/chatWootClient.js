@@ -112,7 +112,9 @@ export default class chatWootClient {
             },
           }
         );
+        console.log('-------------------------------------');
         console.log(this.config);
+        console.log('-------------------------------------');
         configPost.headers = { ...configPost.headers, ...data.getHeaders() };
 
         var result = await axios.post(
