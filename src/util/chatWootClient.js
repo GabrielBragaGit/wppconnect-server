@@ -22,7 +22,7 @@ import { eventEmitter } from './sessionUtil';
 export default class chatWootClient {
   constructor(config, session) {
     this.config = config;
-    this.mobile_name = this.config.mobile_name ? this.config.mobile_name : `ZAP PLUS EVO`;
+    this.mobile_name = this.config.mobile_name ? this.config.mobile_name : `Zap Plus EVO`;
     this.mobile_number = this.config.mobile_number ? this.config.mobile_number : '5511999999999';
     this.sender = {
       pushname: this.mobile_name,
@@ -37,26 +37,26 @@ export default class chatWootClient {
 
     //assina o evento do qrcode
     eventEmitter.on(`qrcode-${session}`, (qrCode, urlCode, client) => {
-      this.sendMessage(client, {
-        sender: this.sender,
-        chatId: '',
-        type: 'image',
-        timestamp: 'qrcode',
-        mimetype: 'image/png',
-        caption: 'leia o qrCode',
-        qrCode: qrCode.replace('data:image/png;base64,', ''),
-      });
-    });
-
-    //assiona o evento do status
-    eventEmitter.on(`status-${session}`, (client, status) => {
       setTimeout(async () => {
         this.sendMessage(client, {
           sender: this.sender,
           chatId: '',
-          body: `wppconnect status: ${status} `,
+          type: 'image',
+          timestamp: 'qrcode',
+          mimetype: 'image/png',
+          caption: 'leia o qrCode',
+          qrCode: qrCode.replace('data:image/png;base64,', ''),
         });
       }, 1000);
+    });
+
+    //assiona o evento do status
+    eventEmitter.on(`status-${session}`, (client, status) => {
+      this.sendMessage(client, {
+        sender: this.sender,
+        chatId: '',
+        body: `wppconnect status: ${status} `,
+      });
     });
 
     //assina o evento de mensagem
