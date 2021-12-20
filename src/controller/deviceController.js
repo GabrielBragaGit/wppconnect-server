@@ -656,10 +656,10 @@ export async function starMessage(req, res) {
 }
 
 export async function chatWoot(req, res) {
-  console.log('-----------------------------------------------------------');
-  console.log(req.body);
-  console.log(JSON.stringify(req.body.messages));
-  console.log('-----------------------------------------------------------');
+  // console.log('-----------------------------------------------------------');
+  // console.log(req.body);
+  // console.log(JSON.stringify(req.body.messages));
+  // console.log('-----------------------------------------------------------');
   const { session } = req.params;
   const client = clientsArray[session];
   if (client == null || client.status !== 'CONNECTED') return;
