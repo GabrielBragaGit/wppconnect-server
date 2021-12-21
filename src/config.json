@@ -2,7 +2,7 @@
   "secretKey": "THISISMYSECURETOKEN",
   "host": "http://localhost",
   "port": "21465",
-  "deviceName" : "WppConnect",
+  "deviceName": "ZapPlusEVO",
   "startAllSession": true,
   "tokenStoreType": "file",
   "webhook": {
@@ -22,7 +22,10 @@
   },
   "log": {
     "level": "error",
-    "logger": ["console", "file"]
+    "logger": [
+      "console",
+      "file"
+    ]
   },
   "createOptions": {
     "browserArgs": [
