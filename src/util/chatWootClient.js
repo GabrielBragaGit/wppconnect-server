@@ -175,7 +175,7 @@ export default class chatWootClient {
       const { data } = await this.api.get(
         `api/v1/accounts/${this.account_id}/conversations?inbox_id=${this.inbox_id}&status=all`
       );
-      return data.data.payload.find((e) => e.meta && e.meta.sender.id == contact.id && e.status != 'resolved');
+      return data.data.payload.find((e) => e.meta.sender.id == contact.id && e.status != 'resolved');
     } catch (e) {
       console.log(e);
       return null;
@@ -183,6 +183,8 @@ export default class chatWootClient {
   }
 
   async createConversation(contact, source_id) {
+    console.log('contact');
+    console.log(contact);
     var conversation = await this.findConversation(contact);
     if (conversation) return conversation;
 
