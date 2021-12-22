@@ -18,7 +18,7 @@ import { download } from './sessionController';
 import { contactToArray, unlinkAsync } from '../util/functions';
 import mime from 'mime-types';
 import { clientsArray } from '../util/sessionUtil';
-import { chatWootClient } from './chatWootClient';
+import { chatWootClient } from '../util/chatWootClient';
 
 function returnSucess(res, session, phone, data) {
   res.status(201).json({
