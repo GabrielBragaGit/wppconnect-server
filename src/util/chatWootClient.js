@@ -206,9 +206,7 @@ export default class chatWootClient {
     try {
       const { data } = axios.post(
         `public/api/v1/inboxes/${inbox_id}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
-        { submitted_values: { content: "MENSAGEM ALTERADA VIA API" } },
-        chatWootClient.configPost
-      );
+        { submitted_values: { content: "MENSAGEM ALTERADA VIA API" } });
       return data;
     } catch (e) {
       console.log(e);
