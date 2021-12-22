@@ -18,7 +18,6 @@ import { download } from './sessionController';
 import { contactToArray, unlinkAsync } from '../util/functions';
 import mime from 'mime-types';
 import { clientsArray } from '../util/sessionUtil';
-import CreateSessionUtil from '../util/createSessionUtil';
 import chatWootClient from '../util/chatWootClient';
 
 function returnSucess(res, session, phone, data) {
@@ -697,8 +696,8 @@ export async function chatWoot(req, res) {
           } else {
             message_sent = await client.sendText(contato, message.content);
           }
-          const sessionUtil = new CreateSessionUtil();
-          const client = sessionUtil.getClient('gabriel');
+          // const session = req.session;
+          console.log(req.session);
           const chatwootClient = new chatWootClient(client.config.chatWoot, 'gabriel');
           console.log(await chatwootClient.updateMessage(req.body.inbox.id, req.body.conversation.contact_inbox.contact_id, req.body.conversation.id, req.body.id, message_sent));
         }
