@@ -201,4 +201,18 @@ export default class chatWootClient {
       return null;
     }
   }
+
+  async updateMessage(inbox_id, contact_id, conversation_id, message_id, message) {
+    try {
+      const { data } = axios.post(
+        `public/api/v1/inboxes/${inbox_id}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
+        { submitted_values: { content: "MENSAGEM ALTERADA VIA API" } },
+        chatWootClient.configPost
+      );
+      return data;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
 }

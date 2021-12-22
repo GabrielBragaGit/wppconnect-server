@@ -18,7 +18,8 @@ import { download } from './sessionController';
 import { contactToArray, unlinkAsync } from '../util/functions';
 import mime from 'mime-types';
 import { clientsArray } from '../util/sessionUtil';
-import { chatWootClient } from '../util/chatWootClient';
+import CreateSessionUtil from '../util/createSessionUtil';
+import chatWootClient from '../util/chatWootClient';
 
 function returnSucess(res, session, phone, data) {
   res.status(201).json({
@@ -687,22 +688,22 @@ export async function chatWoot(req, res) {
       if (event != 'message_created' && message_type != 'outgoing') return res.status(200);
       for (const contato of contactToArray(phone, false)) {
         if (message_type == 'outgoing') {
-          let message_id;
+          let message_sent;
           if (message.attachments) {
             let base_url = `${client.config.chatWoot.baseURL}/${message.attachments[0].data_url.substring(
               message.attachments[0].data_url.indexOf('/rails/') + 1
             )}`;
-            message_id = { id } = await client.sendFile(`${contato}`, base_url, 'file', message.content);
+            message_sent = await client.sendFile(`${contato}`, base_url, 'file', message.content);
           } else {
-            message_id = { id } = await client.sendText(contato, message.content);
+            message_sent = await client.sendText(contato, message.content);
           }
         }
       }
-      await chatWootClient.axios.post(
-        `public/api/v1/inboxes/${req.body.inbox.id}/contacts/${req.body.conversation.contact_inbox.contact_id}/conversations/${req.body.conversation.id}/messages/${req.body.id}`,
-        { submitted_values: { content: "MENSAGEM ALTERADA VIA API" } },
-        chatWootClient.configPost
-      );
+      const sessionUtil = new CreateSessionUtil();
+      const client = sessionUtil.getClient('gabriel');
+      const chatwootClient = new chatWootClient(client.config.chatWoot, 'gabriel');
+      console.log(await chatwootClient.updateMessage(req.body.inbox.id, req.body.conversation.contact_inbox.contact_id, req.body.conversation.id, req.body.id, message_sent));
+
       return res.status(200).json({ status: 'success', message: 'Success on  receive chatwoot' });
     }
   } catch (e) {
