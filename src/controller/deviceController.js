@@ -697,7 +697,10 @@ export async function chatWoot(req, res) {
             message_sent = await client.sendText(contato, message.content);
           }
           // const session = req.session;
-          console.log(req.session);
+          // console.log(req.session);
+          console.log('===========================');
+          console.log(client);
+          console.log('===========================');
           const chatwootClient = new chatWootClient(client.config.chatWoot, 'gabriel');
           console.log(await chatwootClient.updateMessage(req.body.inbox.id, req.body.conversation.contact_inbox.contact_id, req.body.conversation.id, req.body.id, message_sent));
         }
