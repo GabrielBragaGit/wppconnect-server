@@ -697,12 +697,12 @@ export async function chatWoot(req, res) {
           } else {
             message_sent = await client.sendText(contato, message.content);
           }
+          const sessionUtil = new CreateSessionUtil();
+          const client = sessionUtil.getClient('gabriel');
+          const chatwootClient = new chatWootClient(client.config.chatWoot, 'gabriel');
+          console.log(await chatwootClient.updateMessage(req.body.inbox.id, req.body.conversation.contact_inbox.contact_id, req.body.conversation.id, req.body.id, message_sent));
         }
       }
-      const sessionUtil = new CreateSessionUtil();
-      const client = sessionUtil.getClient('gabriel');
-      const chatwootClient = new chatWootClient(client.config.chatWoot, 'gabriel');
-      console.log(await chatwootClient.updateMessage(req.body.inbox.id, req.body.conversation.contact_inbox.contact_id, req.body.conversation.id, req.body.id, message_sent));
 
       return res.status(200).json({ status: 'success', message: 'Success on  receive chatwoot' });
     }
