@@ -183,8 +183,6 @@ export default class chatWootClient {
   }
 
   async createConversation(contact, source_id) {
-    console.log('contact');
-    console.log(contact);
     var conversation = await this.findConversation(contact);
     if (conversation) return conversation;
 
