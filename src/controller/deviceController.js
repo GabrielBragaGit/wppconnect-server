@@ -18,6 +18,7 @@ import { download } from './sessionController';
 import { contactToArray, unlinkAsync } from '../util/functions';
 import mime from 'mime-types';
 import { clientsArray } from '../util/sessionUtil';
+import { chatWootClient } from './chatWootClient';
 
 function returnSucess(res, session, phone, data) {
   res.status(201).json({
@@ -656,9 +657,6 @@ export async function starMessage(req, res) {
 }
 
 export async function chatWoot(req, res) {
-  // console.log('-----------------------------------------------------------');
-  // console.log(req.body);
-  // console.log('-----------------------------------------------------------');
   const { session } = req.params;
   const client = clientsArray[session];
   if (client == null || client.status !== 'CONNECTED') return;
@@ -668,7 +666,17 @@ export async function chatWoot(req, res) {
 
       if (event == 'conversation_status_changed' || event == 'conversation_resolved' || req.body.private) {
         return res.status(200).json({ status: 'success', message: 'Success on receive chatwoot' });
+      } else if (event == 'message_updated' && req.body.content_attributes && req.body.content_attributes.deleted) {
+        try {
+          await client.deleteMessage(req.body.conversation.contact_inbox.source_id.split('_')[1], req.body.conversation.contact_inbox.source_id);
+          return res.status(200).json({ status: 'success', message: 'Success on  delete message' });
+        } catch (e) {
+          console.log(e);
+          return res.status(400).json({ status: 'error', message: 'Error on  delete message' });
+        }
       }
+
+
 
       const {
         message_type,
@@ -679,16 +687,22 @@ export async function chatWoot(req, res) {
       if (event != 'message_created' && message_type != 'outgoing') return res.status(200);
       for (const contato of contactToArray(phone, false)) {
         if (message_type == 'outgoing') {
+          let message_id;
           if (message.attachments) {
             let base_url = `${client.config.chatWoot.baseURL}/${message.attachments[0].data_url.substring(
               message.attachments[0].data_url.indexOf('/rails/') + 1
             )}`;
-            await client.sendFile(`${contato}`, base_url, 'file', message.content);
+            message_id = { id } = await client.sendFile(`${contato}`, base_url, 'file', message.content);
           } else {
-            await client.sendText(contato, message.content);
+            message_id = { id } = await client.sendText(contato, message.content);
           }
         }
       }
+      await chatWootClient.axios.post(
+        `public/api/v1/inboxes/${req.body.inbox.id}/contacts/${req.body.conversation.contact_inbox.contact_id}/conversations/${req.body.conversation.id}/messages/${req.body.id}`,
+        { submitted_values: { content: "MENSAGEM ALTERADA VIA API" } },
+        chatWootClient.configPost
+      );
       return res.status(200).json({ status: 'success', message: 'Success on  receive chatwoot' });
     }
   } catch (e) {
