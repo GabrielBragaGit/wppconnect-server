@@ -702,7 +702,7 @@ export async function chatWoot(req, res) {
           console.log(client);
           console.log(client.session);
           console.log('===========================');
-          const chatwootClient = new chatWootClient(client.config.chatWoot, 'gabriel');
+          const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
           console.log(await chatwootClient.updateMessage(req.body.inbox.id, req.body.conversation.contact_inbox.contact_id, req.body.conversation.id, req.body.id, message_sent));
         }
       }

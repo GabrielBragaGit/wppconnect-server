@@ -104,22 +104,21 @@ export default class chatWootClient {
         data.append('message_type', 'incoming');
         data.append('private', 'false');
 
-        let configPost = Object.assign(
-          {},
-          {
-            baseURL: this.config.baseURL,
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8',
-              api_access_token: this.config.token,
-            },
-          }
-        );
-        configPost.headers = { ...configPost.headers, ...data.getHeaders() };
+        // let configPost = Object.assign(
+        //   {},
+        //   {
+        //     baseURL: this.config.baseURL,
+        //     headers: {
+        //       'Content-Type': 'application/json;charset=utf-8',
+        //       api_access_token: this.config.token,
+        //     },
+        //   }
+        // );
+        // configPost.headers = { ...configPost.headers, ...data.getHeaders() };
 
-        var result = await axios.post(
+        var result = await this.api.post(
           `api/v1/accounts/${this.account_id}/conversations/${conversation.id}/messages`,
-          data,
-          configPost
+          data
         );
 
         return result;
@@ -204,7 +203,7 @@ export default class chatWootClient {
 
   async updateMessage(inbox_id, contact_id, conversation_id, message_id, message) {
     try {
-      const { data } = axios.post(
+      const { data } = await this.api.post(
         `public/api/v1/inboxes/${inbox_id}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
         { submitted_values: { content: "MENSAGEM ALTERADA VIA API" } });
       return data;
