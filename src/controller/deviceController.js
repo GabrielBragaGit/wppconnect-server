@@ -674,6 +674,8 @@ export async function chatWoot(req, res) {
           console.log(e);
           return res.status(400).json({ status: 'error', message: 'Error on  delete message' });
         }
+      } else if (event == 'message_updated') {
+        return res.status(200).json({ status: 'success', message: 'Success on receive chatwoot' });
       }
 
 

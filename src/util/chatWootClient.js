@@ -103,6 +103,7 @@ export default class chatWootClient {
         });
         data.append('message_type', 'incoming');
         data.append('private', 'false');
+        data.append('content_attributes[in_reply_to]', message.id);
 
         var result = await this.api.post(
           `api/v1/accounts/${this.account_id}/conversations/${conversation.id}/messages`,
@@ -115,7 +116,7 @@ export default class chatWootClient {
           content: message.body,
           message_type: 'incoming',
           content_attributes: {
-            message_id: message.id,
+            in_reply_to: message.id,
           },
         };
         const { data } = await this.api.post(
