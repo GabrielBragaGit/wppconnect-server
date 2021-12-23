@@ -30,6 +30,7 @@ export default class chatWootClient {
     };
     this.account_id = this.config.account_id;
     this.inbox_id = this.config.inbox_id;
+    this.inbox_identifier = this.config.inbox_identifier;
     this.api = axios.create({
       baseURL: this.config.baseURL,
       headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: this.config.token },
@@ -193,10 +194,10 @@ export default class chatWootClient {
     }
   }
 
-  async updateMessage(inbox_id, contact_id, conversation_id, message_id, message) {
+  async updateMessage(contact_id, conversation_id, message_id, message) {
     try {
       const { data } = await this.api.patch(
-        `public/api/v1/inboxes/${inbox_id}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
+        `public/api/v1/inboxes/${this.inbox_identifier}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
         { submitted_values: { value: message.id } });
       return data;
     } catch (e) {

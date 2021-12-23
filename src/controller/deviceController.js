@@ -700,9 +700,8 @@ export async function chatWoot(req, res) {
             message_sent = await client.sendText(contato, message.content);
           }
 
-          console.log(message_sent);
           const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
-          console.log(await chatwootClient.updateMessage('n9CLNULYt4d91n7kM5YH4Nra', phone, req.body.conversation.id, req.body.id, message_sent));
+          await chatwootClient.updateMessage(phone, req.body.conversation.id, req.body.id, message_sent);
         }
       }
 
