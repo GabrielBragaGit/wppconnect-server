@@ -104,18 +104,6 @@ export default class chatWootClient {
         data.append('message_type', 'incoming');
         data.append('private', 'false');
 
-        // let configPost = Object.assign(
-        //   {},
-        //   {
-        //     baseURL: this.config.baseURL,
-        //     headers: {
-        //       'Content-Type': 'application/json;charset=utf-8',
-        //       api_access_token: this.config.token,
-        //     },
-        //   }
-        // );
-        // configPost.headers = { ...configPost.headers, ...data.getHeaders() };
-
         var result = await this.api.post(
           `api/v1/accounts/${this.account_id}/conversations/${conversation.id}/messages`,
           data
