@@ -695,6 +695,7 @@ export async function chatWoot(req, res) {
               message.attachments[0].data_url.indexOf('/rails/') + 1
             )}`;
             message_sent = await client.sendFile(contato, base_url, 'file', message.content);
+            console.log(message_sent);
           } else {
             message_sent = await client.sendText(contato, message.content);
           }
