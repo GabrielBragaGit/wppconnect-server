@@ -126,6 +126,9 @@ export default class chatWootClient {
         let body = {
           content: message.body,
           message_type: 'incoming',
+          content_attributes: {
+            message_id: message.id,
+          },
         };
         const { data } = await this.api.post(
           `api/v1/accounts/${this.account_id}/conversations/${conversation.id}/messages`,
