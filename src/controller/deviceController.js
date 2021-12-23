@@ -689,18 +689,18 @@ export async function chatWoot(req, res) {
       if (event != 'message_created' && message_type != 'outgoing') return res.status(200);
       for (const contato of contactToArray(phone, false)) {
         if (message_type == 'outgoing') {
-          // let message_sent;
+          let message_sent;
           if (message.attachments) {
             let base_url = `${client.config.chatWoot.baseURL}/${message.attachments[0].data_url.substring(
               message.attachments[0].data_url.indexOf('/rails/') + 1
             )}`;
-            message_sent = await client.sendFile(`${contato}`, base_url, 'file', message.content);
+            message_sent = await client.sendFile(contato, base_url, 'file', message.content);
           } else {
             message_sent = await client.sendText(contato, message.content);
           }
 
-          // const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
-          // console.log(await chatwootClient.updateMessage(req.body.inbox.id, req.body.conversation.contact_inbox.contact_id, req.body.conversation.id, req.body.id, message_sent));
+          const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
+          console.log(await chatwootClient.updateMessage('n9CLNULYt4d91n7kM5YH4Nra', phone, req.body.conversation.id, req.body.id, message_sent));
         }
       }
 

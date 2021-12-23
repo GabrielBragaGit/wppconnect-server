@@ -197,7 +197,7 @@ export default class chatWootClient {
     try {
       const { data } = await this.api.patch(
         `public/api/v1/inboxes/${inbox_id}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
-        { submitted_values: { content: "MENSAGEM ALTERADA VIA API" } });
+        { submitted_values: { value: message.id } });
       return data;
     } catch (e) {
       console.log(e);
