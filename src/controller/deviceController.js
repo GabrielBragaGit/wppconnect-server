@@ -668,7 +668,7 @@ export async function chatWoot(req, res) {
         return res.status(200).json({ status: 'success', message: 'Success on receive chatwoot' });
       } else if (event == 'message_updated' && req.body.content_attributes && req.body.content_attributes.deleted) {
         try {
-          await client.deleteMessage(req.body.conversation.contact_inbox.source_id.split('_')[1], req.body.conversation.contact_inbox.source_id);
+          await client.deleteMessage(req.body.content_attributes.submitted_values.value.split('_')[1], req.body.content_attributes.submitted_values.value);
           return res.status(200).json({ status: 'success', message: 'Success on  delete message' });
         } catch (e) {
           console.log(e);
