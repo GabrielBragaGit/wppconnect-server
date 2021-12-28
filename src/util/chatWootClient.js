@@ -63,7 +63,6 @@ export default class chatWootClient {
 
     //assina o evento de mensagem
     eventEmitter.on(`mensagem-${session}`, (client, message) => {
-      console.log('===== Mensagem emitter =====');
       this.sendMessage(client, message);
     });
   }
