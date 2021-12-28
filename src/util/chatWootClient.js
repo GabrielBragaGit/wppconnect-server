@@ -21,7 +21,6 @@ import { eventEmitter } from './sessionUtil';
 
 export default class chatWootClient {
   constructor(config, session) {
-    console.log('INICIANDO CONSTRUTUOR');
     this.config = config;
     this.mobile_name = this.config.mobile_name ? this.config.mobile_name : `Zap Plus EVO`;
     this.mobile_number = this.config.mobile_number ? this.config.mobile_number : '5511999999999';
