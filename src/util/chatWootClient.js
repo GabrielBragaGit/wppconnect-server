@@ -21,6 +21,7 @@ import { eventEmitter } from './sessionUtil';
 
 export default class chatWootClient {
   constructor(config, session) {
+    console.log('INICIANDO CONSTRUTUOR');
     this.config = config;
     this.mobile_name = this.config.mobile_name ? this.config.mobile_name : `Zap Plus EVO`;
     this.mobile_number = this.config.mobile_number ? this.config.mobile_number : '5511999999999';
@@ -62,6 +63,10 @@ export default class chatWootClient {
 
     //assina o evento de mensagem
     eventEmitter.on(`mensagem-${session}`, (client, message) => {
+      console.log('===== Mensagem =====');
+      console.log(message);
+      console.log(client);
+      console.log('===== Mensagem =====');
       this.sendMessage(client, message);
     });
   }
@@ -70,7 +75,6 @@ export default class chatWootClient {
     if (message.isGroupMsg || message.chatId.indexOf('@broadcast') > 0) return;
     let contact = await this.createContact(message);
     let conversation = await this.createConversation(contact, message.chatId.split('@')[0]);
-    console.log('entrei no send message');
 
     try {
       if (
