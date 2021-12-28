@@ -63,10 +63,7 @@ export default class chatWootClient {
 
     //assina o evento de mensagem
     eventEmitter.on(`mensagem-${session}`, (client, message) => {
-      console.log('===== Mensagem =====');
-      console.log(message);
-      console.log(client);
-      console.log('===== Mensagem =====');
+      console.log('===== Mensagem emitter =====');
       this.sendMessage(client, message);
     });
   }
@@ -74,10 +71,6 @@ export default class chatWootClient {
   async sendMessage(client, message) {
     if (message.isGroupMsg || message.chatId.indexOf('@broadcast') > 0) return;
     let contact = await this.createContact(message);
-    console.log('===== Mensagem3 =====');
-    console.log(message);
-    console.log(client);
-    console.log('===== Mensagem3 =====');
     let conversation = await this.createConversation(contact, message.chatId.split('@')[0]);
 
     try {
