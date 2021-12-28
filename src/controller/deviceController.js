@@ -703,7 +703,7 @@ export async function chatWoot(req, res) {
           }
 
           // const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
-          await updateMessage(phone, req.body.conversation.id, req.body.id, message_sent);
+          await updateMessage(client, phone, req.body.conversation.id, req.body.id, message_sent);
         }
       }
 
@@ -715,7 +715,7 @@ export async function chatWoot(req, res) {
   }
 
 }
-async function updateMessage(contact_id, conversation_id, message_id, message) {
+async function updateMessage(client, contact_id, conversation_id, message_id, message) {
   let api = axios.create({
     baseURL: client.config.baseURL,
     headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: client.config.token },
