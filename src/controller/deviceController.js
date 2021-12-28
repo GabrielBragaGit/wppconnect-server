@@ -717,12 +717,12 @@ export async function chatWoot(req, res) {
 }
 async function updateMessage(contact_id, conversation_id, message_id, message) {
   let api = axios.create({
-    baseURL: this.config.baseURL,
-    headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: this.config.token },
+    baseURL: client.config.baseURL,
+    headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: client.config.token },
   });
   try {
     const { data } = await api.patch(
-      `public/api/v1/inboxes/${this.config.inbox_identifier}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
+      `public/api/v1/inboxes/${client.config.inbox_identifier}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
       { submitted_values: { value: message.id } });
     return data;
   } catch (e) {
