@@ -722,7 +722,7 @@ async function updateMessage(client, contact_id, conversation_id, message_id, me
     headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: client.token },
   });
   try {
-    const { data } = await client.api.patch(
+    const { data } = await api.patch(
       `public/api/v1/inboxes/${client.inbox_identifier}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
       { submitted_values: { value: message.id } });
     return data;
