@@ -717,7 +717,7 @@ export async function chatWoot(req, res) {
 }
 async function updateMessage(client, contact_id, conversation_id, message_id, message) {
   console.log(client);
-  let api = axios.create({
+  const api = axios.create({
     baseURL: client.baseURL,
     headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: client.token },
   });
