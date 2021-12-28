@@ -703,7 +703,7 @@ export async function chatWoot(req, res) {
           }
 
           // const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
-          await updateMessage(client, phone, req.body.conversation.id, req.body.id, message_sent);
+          await updateMessage(client.config.chatWoot, phone, req.body.conversation.id, req.body.id, message_sent);
         }
       }
 
@@ -716,15 +716,14 @@ export async function chatWoot(req, res) {
 
 }
 async function updateMessage(client, contact_id, conversation_id, message_id, message) {
-  console.log(client.config);
-  console.log(client.api);
-  // let api = axios.create({
-  //   baseURL: client.config.baseURL,
-  //   headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: client.config.token },
-  // });
+  console.log(client);
+  let api = axios.create({
+    baseURL: client.baseURL,
+    headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: client.token },
+  });
   try {
     const { data } = await client.api.patch(
-      `public/api/v1/inboxes/${client.config.inbox_identifier}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
+      `public/api/v1/inboxes/${client.inbox_identifier}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
       { submitted_values: { value: message.id } });
     return data;
   } catch (e) {
