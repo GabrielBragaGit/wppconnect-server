@@ -70,6 +70,7 @@ export default class chatWootClient {
     if (message.isGroupMsg || message.chatId.indexOf('@broadcast') > 0) return;
     let contact = await this.createContact(message);
     let conversation = await this.createConversation(contact, message.chatId.split('@')[0]);
+    console.log('entrei no send message');
 
     try {
       if (
