@@ -18,7 +18,9 @@ import { download } from './sessionController';
 import { contactToArray, unlinkAsync } from '../util/functions';
 import mime from 'mime-types';
 import { clientsArray } from '../util/sessionUtil';
-import chatWootClient from '../util/chatWootClient';
+// import chatWootClient from '../util/chatWootClient';
+import axios from 'axios';
+
 
 function returnSucess(res, session, phone, data) {
   res.status(201).json({
@@ -701,7 +703,7 @@ export async function chatWoot(req, res) {
           }
 
           // const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
-          await new chatWootClient(client.config.chatWoot, client.session).updateMessage(phone, req.body.conversation.id, req.body.id, message_sent).destroy();
+          await updateMessage(phone, req.body.conversation.id, req.body.id, message_sent);
         }
       }
 
@@ -710,5 +712,21 @@ export async function chatWoot(req, res) {
   } catch (e) {
     console.log(e);
     return res.status(400).json({ status: 'error', message: 'Error on  receive chatwoot' });
+  }
+
+}
+async function updateMessage(contact_id, conversation_id, message_id, message) {
+  let api = axios.create({
+    baseURL: this.config.baseURL,
+    headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: this.config.token },
+  });
+  try {
+    const { data } = await api.patch(
+      `public/api/v1/inboxes/${this.config.inbox_identifier}/contacts/${contact_id}/conversations/${conversation_id}/messages/${message_id}`,
+      { submitted_values: { value: message.id } });
+    return data;
+  } catch (e) {
+    console.log(e);
+    return null;
   }
 }
