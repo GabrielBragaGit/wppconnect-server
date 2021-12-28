@@ -701,7 +701,7 @@ export async function chatWoot(req, res) {
           }
 
           // const chatwootClient = new chatWootClient(client.config.chatWoot, client.session);
-          await client.updateMessage(phone, req.body.conversation.id, req.body.id, message_sent);
+          await this.chatWootClient.updateMessage(phone, req.body.conversation.id, req.body.id, message_sent);
         }
       }
 
